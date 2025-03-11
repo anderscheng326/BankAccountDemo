@@ -22,57 +22,64 @@ Class: BankAccount
 using System.Diagnostics.Contracts;
 using System.Transactions;
 
-public class BankAccount
-{
-    string accountID;
-    float balance;
-    List<string> transactions = new List<string>();
-
-    public BankAccount(string name, float initialBalance)
+namespace BankAccount{
+    public class BankAccount
     {
-        this.accountID = name;
-        this.balance = initialBalance;
-        this.transactions = new List<string>();
-        transactions.Add($"New Account:{accountID} - Initial Balance: ${balance}");
-    }
+        string accountID ="";
+        double balance;
+        List<string> transactions = new List<string>();
 
-    public string AccountID
-    {
-        get {return accountID;}
-    }
-
-    public float Balance
-    {
-        get {return balance;}
-    } 
-
-    public List<string> Transactions
-    {
-        get {return transactions;}
-    }
-
-    public void Deposit(float amount)
-    {
-        if (amount > 0)
+        public BankAccount(string name, double initialBalance)
         {
-            balance += amount;
-            transactions.Add($"-Deposit: $ {amount} - Updated Balance: ${balance}");
+            if (initialBalance < 0 || name == "" ) {
+            Console.WriteLine("Invalid initial balance.");
+            }
+            else{
+            this.accountID = name;
+            this.balance = initialBalance;
+            this.transactions = new List<string>();
+            transactions.Add($"New Account:{accountID} - Initial Balance: ${balance}");
+            }
         }
-        else
+
+        public string AccountID
         {
-            Console.WriteLine("Invalid deposit.");
+            get {return accountID;}
         }
-    }
-    public void Withdraw(float amount)
-    {
-        if (amount > 0 && balance > amount)
+
+        public double Balance
         {
-            balance -= amount;
-            transactions.Add($"-Withdraw: $ {amount} - Updated Balance: ${balance}");
+            get {return balance;}
+        } 
+
+        public List<string> Transactions
+        {
+            get {return transactions;}
         }
-        else
+
+        public void Deposit(double amount)
         {
-            Console.WriteLine("Invalid withdrawal.");
+            if (amount > 0)
+            {
+                balance += amount;
+                transactions.Add($"-Deposit: $ {amount} - Updated Balance: ${balance}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid deposit.");
+            }
+        }
+        public void Withdraw(double amount)
+        {
+            if (amount > 0 && balance > amount)
+            {
+                balance -= amount;
+                transactions.Add($"-Withdraw: $ {amount} - Updated Balance: ${balance}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid withdrawal.");
+            }
         }
     }
 }
